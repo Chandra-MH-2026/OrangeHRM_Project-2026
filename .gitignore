@@ -1,0 +1,109 @@
+# ===========================
+# Maven
+# ===========================
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+
+# ===========================
+# Eclipse
+# ===========================
+.project
+.classpath
+.settings/
+.metadata/
+bin/
+
+# ===========================
+# IntelliJ IDEA
+# ===========================
+.idea/
+*.iml
+out/
+
+# ===========================
+# VS Code
+# ===========================
+.vscode/
+
+# ===========================
+# Java
+# ===========================
+*.class
+*.jar
+*.war
+*.ear
+
+# ===========================
+# Logs
+# ===========================
+logs/
+*.log
+log/
+
+# ===========================
+# Test Reports
+# ===========================
+test-output/
+surefire-reports/
+reports/
+allure-results/
+allure-report/
+
+# Extent Reports
+ExtentReports/
+extent-report/
+SparkReport/
+screenshots/
+
+# ===========================
+# Screenshots
+# ===========================
+Screenshots/
+FailedScreenshots/
+*.png
+
+# ===========================
+# OS Files
+# ===========================
+.DS_Store
+Thumbs.db
+
+# ===========================
+# Temporary Files
+# ===========================
+*.tmp
+*.bak
+*.swp
+*.temp
+
+# ===========================
+# Environment Files
+# ===========================
+.env
+.env.*
+
+# ===========================
+# Maven Wrapper
+# (Uncomment if not using Maven Wrapper)
+# ===========================
+# .mvn/
+# mvnw
+# mvnw.cmd
+
+# ===========================
+# Selenium Drivers
+# Ignore only if stored inside project
+# ===========================
+drivers/
+*.exe
+
+# ===========================
+# Local Configuration
+# (Optional)
+# ===========================
+config-local.properties
