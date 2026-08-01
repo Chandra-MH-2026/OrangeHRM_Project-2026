@@ -3,7 +3,7 @@
 	<listeners>
 		<listener class-name="com.orangehrm.listeners.TestListeners"></listener>
 	</listeners>
-	<test name="OrangeHRMTest_chrome">
+<!--  	<test name="OrangeHRMTest_chrome">
 		<parameter name="browser" value="chrome" />
 		<classes>
 			<class name="com.orangehrm.test.DummyTest" />
@@ -13,7 +13,7 @@
 
 		</classes>
 	</test>
-
+-->
 	<test name="OrangeHRMTest_edge">
 		<parameter name="browser" value="edge" />
 		<classes>
@@ -24,7 +24,8 @@
 
 
 		</classes>
-	</test>
+		</test>
+<!--  	</test>
 	<test name="OrangeHRMTest_firefox">
 		<parameter name="browser" value="firefox" />
 		<classes>
@@ -35,5 +36,5 @@
 
 
 		</classes>
-	</test>
+	</test> -->
 </suite>

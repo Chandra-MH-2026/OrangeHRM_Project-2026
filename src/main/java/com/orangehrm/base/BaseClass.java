@@ -168,14 +168,14 @@ public class BaseClass {
 			
 			EdgeOptions options = new EdgeOptions();
 
-			options.addArguments("--headless=new");
+			
+
+			options.addArguments("--headless");
 			options.addArguments("--disable-gpu");
 			options.addArguments("--window-size=1920,1080");
-			options.addArguments("--disable-notifications");
-			options.addArguments("--ignore-certificate-errors");
-			options.addArguments("--disable-popup-blocking");
 			options.addArguments("--no-sandbox");
 			options.addArguments("--disable-dev-shm-usage");
+			options.addArguments("--remote-debugging-port=9222");
 			//driver = new EdgeDriver();
 			driver.set(new EdgeDriver(options));
 			ExtentManger.registerDriver(getDriver());
