@@ -167,12 +167,15 @@ public class BaseClass {
 		} else if (browser.equalsIgnoreCase("edge")) {
 			
 			EdgeOptions options = new EdgeOptions();
+
 			options.addArguments("--headless=new");
 			options.addArguments("--disable-gpu");
+			options.addArguments("--window-size=1920,1080");
 			options.addArguments("--disable-notifications");
-			options.addArguments("--start-maximized");
 			options.addArguments("--ignore-certificate-errors");
 			options.addArguments("--disable-popup-blocking");
+			options.addArguments("--no-sandbox");
+			options.addArguments("--disable-dev-shm-usage");
 			//driver = new EdgeDriver();
 			driver.set(new EdgeDriver(options));
 			ExtentManger.registerDriver(getDriver());
