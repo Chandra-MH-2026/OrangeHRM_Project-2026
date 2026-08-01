@@ -2,6 +2,8 @@ package com.orangehrm.base;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.Duration;
 import java.util.Properties;
 import java.util.concurrent.locks.LockSupport;
@@ -15,9 +17,11 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.Parameters;
 import org.testng.asserts.SoftAssert;
 
 import com.orangehrm.actiondriver.ActionDriver;
@@ -53,12 +57,82 @@ public class BaseClass {
 		//ExtentManger.getReporter(); // Initialize ExtentReports instance
 	}
 
-	public synchronized void launchBrowser() {
+	@SuppressWarnings("deprecation")
+	public synchronized void launchBrowser(String browser) {
 		// Set system properties for WebDriver executables based on the browser
 		// specified in the properties file
-		String browser = prop.getProperty("browser");
+		//String browser = prop.getProperty("browser");
+		Boolean seleniumGrid = Boolean.parseBoolean(prop.getProperty("seleniumGrid"));
+		String gridURL = prop.getProperty("gridURL");
+		
+		if(seleniumGrid)
+		{
+			if (browser.equalsIgnoreCase("chrome")) {
+				
+				ChromeOptions options = new ChromeOptions();
+				
+				options.addArguments("--headless=new");
+				//options.addArguments("--window-size=2560,1440");
+				//options.addArguments("--window-size=1920,1080");
+				options.addArguments("--disable-gpu");
+				options.addArguments("--disable-notifications");
+				//options.addArguments("--start-maximized");
+				options.addArguments("--ignore-certificate-errors");
+				options.addArguments("--disable-popup-blocking");
+				//driver = new ChromeDriver();
+				//driver.set(new ChromeDriver(options));
+				try {
+					driver.set(new RemoteWebDriver(new URL(gridURL), options));
+				} catch (MalformedURLException e) {
+					throw new IllegalArgumentException("Browser not supported: " + browser);
+				}
+				ExtentManger.registerDriver(getDriver()); // Register WebDriver instance with ExtentManager
+				logger.info("RemoteWebDriver Chrome launched successfully.");
+				
+			} else if (browser.equalsIgnoreCase("firefox")) {
+				FirefoxOptions options = new FirefoxOptions();
+				options.addArguments("--headless=new");
+				 options.addArguments("--disable-gpu");
+				 options.addArguments("--disable-notifications");
+				 options.addArguments("--start-maximized");
+				 options.addArguments("--ignore-certificate-errors");
+				 options.addArguments("--disable-popup-blocking");
+				//driver = new FirefoxDriver();
+				//driver.set(new FirefoxDriver(options));
+				 try {
+						driver.set(new RemoteWebDriver(new URL(gridURL), options));
+					} catch (MalformedURLException e) {
+						throw new IllegalArgumentException("Browser not supported: " + browser);
+					}
+				ExtentManger.registerDriver(getDriver());
+				logger.info("RemoteWebDriver firefox launched successfully.");
+				
+			} else if (browser.equalsIgnoreCase("edge")) {
+				
+				EdgeOptions options = new EdgeOptions();
+				options.addArguments("--headless=new");
+				options.addArguments("--disable-gpu");
+				options.addArguments("--disable-notifications");
+				options.addArguments("--start-maximized");
+				options.addArguments("--ignore-certificate-errors");
+				options.addArguments("--disable-popup-blocking");
+				//driver = new EdgeDriver();
+				//driver.set(new EdgeDriver(options));
+				try {
+					driver.set(new RemoteWebDriver(new URL(gridURL), options));
+				} catch (MalformedURLException e) {
+					throw new IllegalArgumentException("Browser not supported: " + browser);
+				}
+				ExtentManger.registerDriver(getDriver());
+				logger.info("RemoteWebDriver edge launched successfully.");
+				
+			} else {
+				throw new IllegalArgumentException("Browser not supported: " + browser);
+			}
 
-		if (browser.equalsIgnoreCase("chrome")) {
+		}
+		
+		else if (browser.equalsIgnoreCase("chrome")) {
 			
 			ChromeOptions options = new ChromeOptions();
 			
@@ -131,11 +205,12 @@ public class BaseClass {
 	}
 
 	@BeforeMethod
-	public synchronized void  setUp() throws IOException {
+	@Parameters("browser")
+	public synchronized void  setUp(String browser) throws IOException {
 		
 		System.out.println("Setting up the webdrvier for the test: " + this.getClass().getSimpleName());
 		
-		launchBrowser();
+		launchBrowser(browser);
 		configureBrowser();
 		staticWait(2);
 		logger.info("WebDriver initialized and browser Maximized successfully.");

@@ -32,7 +32,7 @@ public class LoginPageTest extends BaseClass {
 		Assert.assertTrue(homepage.isAdminTabDisplayed(), "Admin tab is not displayed, login might have failed.");
 		ExtentManger.logStep("Admin tab is displayed, login successful.");
 		homepage.logout();
-		ExtentManger.logStep("Logged out successfully.");
+		ExtentManger.logStep("Logged out successfully.Logged out successfully");
 		staticWait(2000);
 		
 	}
