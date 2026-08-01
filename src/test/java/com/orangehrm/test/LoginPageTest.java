@@ -1,6 +1,5 @@
 package com.orangehrm.test;
 
-import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -32,7 +31,7 @@ public class LoginPageTest extends BaseClass {
 		Assert.assertTrue(homepage.isAdminTabDisplayed(), "Admin tab is not displayed, login might have failed.");
 		ExtentManger.logStep("Admin tab is displayed, login successful.");
 		homepage.logout();
-		ExtentManger.logStep("Logged out successfully.");
+		ExtentManger.logStep("Logged out successfully.Logged out successfully");
 		staticWait(2000);
 		
 	}
