@@ -5,6 +5,7 @@ import java.time.Duration;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -86,6 +87,31 @@ public class ActionDriver {
 			 ExtentManger.logFailure(BaseClass.getDriver(), "Unable to click an element", "Failed to click on element: " + by);
 		}
 	}
+	//Checkbox click
+	public void Js_CheckBoxClick(By by) {
+		try {
+			borderElement(by,"Green");
+			waitForElementToBeClickable(by);
+			WebElement element = driver.findElement(by);
+			JavascriptExecutor js = (JavascriptExecutor) driver;
+			js.executeScript("arguments[0].click();", element);
+			
+			 logger.info("Clicked on checkbox: " + by);
+			 ExtentManger.logStep("Clicked on checkbox: " + by);
+		} catch (Exception e) {
+			borderElement(by,"Red");
+			System.out.println("Unable to click on checkbox : " + by);
+			 logger.error("Unable to click checkbox: " + by, e);
+			 ExtentManger.logFailure(BaseClass.getDriver(), "Unable to click on checkbox", "Failed to click on element: " + by);
+		}
+	}
+	
+	//Method to clear Textbox
+	public void clearText(By by)
+	{
+		WebElement element = driver.findElement(by);
+		
+	}
 	
 //Method to enter text into an element
 	public void enterText(By by, String text) {
@@ -93,7 +119,10 @@ public class ActionDriver {
 			waitForElementToBeVisible(by);
 			borderElement(by,"Green");
 			WebElement element = driver.findElement(by);
-			element.clear();
+			element.click();
+			element.sendKeys(Keys.CONTROL, "a");
+			element.sendKeys(Keys.BACK_SPACE);
+			//element.clear();
 			element.sendKeys(text);
 			 logger.info("Entered text '" + text + "' into element: " + by);
 		} catch (Exception e) {
@@ -118,6 +147,20 @@ public class ActionDriver {
 		}
 	}
 	
+	//Method to get textbox value
+		public String getTextBoxValue(By by) {
+			try {
+				waitForElementToBeVisible(by);
+				borderElement(by,"Green");
+				return driver.findElement(by).getAttribute("value");
+			} catch (Exception e) {
+				borderElement(by,"Red");
+				System.out.println("Unable to get text from textbox: " + e.getMessage());
+				 logger.error("Unable to get text from textbox: " + by, e);
+				return null;
+			}
+		}
+	
 //Method to compare expected and actual text
 	public boolean compareText(By by, String expectedText) {
 		try {
@@ -132,6 +175,32 @@ public class ActionDriver {
 				borderElement(by,"Red");
 				System.out.println("Text does not match. Expected: " + expectedText + ", Actual: " + actualText);
 				ExtentManger.logFailure(BaseClass.getDriver(), "Compare Text", "Text does not match. Expected: " + expectedText + ", Actual: " + actualText);
+				return false;
+				
+			}
+		} catch (Exception e) {
+			System.out.println("Unable to compare text: " + e.getMessage());
+			logger.error("Unable to compare text for element: " + by, e);
+			 return false;
+		}
+		
+	}
+	
+	//Method to compare attribute value expected and actual value
+	public boolean compareAttribute(By by, String expectedValue) {
+		try {
+			waitForElementToBeVisible(by);
+			String actualValue = getTextBoxValue(by);
+			System.out.println("Actual value " +actualValue);
+			if (actualValue != null && actualValue.equals(expectedValue)) {
+				borderElement(by,"Green");
+				System.out.println("Text are matching. Expected: " + expectedValue + ", Actual: " + actualValue);
+				ExtentManger.logStepWithScreenshot(BaseClass.getDriver(), "Compare Textbox Value", "Textbox values are matching. Expected: " + expectedValue + ", Actual: " + actualValue);
+				return true;
+			} else {
+				borderElement(by,"Red");
+				System.out.println("Text does not match. Expected: " + expectedValue + ", Actual: " + actualValue);
+				ExtentManger.logFailure(BaseClass.getDriver(), "Compare Textbox Value", "Textbox values does not match. Expected: " + expectedValue + ", Actual: " + actualValue);
 				return false;
 				
 			}

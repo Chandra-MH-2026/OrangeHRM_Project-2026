@@ -21,6 +21,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 import org.testng.asserts.SoftAssert;
 
@@ -134,22 +135,23 @@ public class BaseClass {
 		
 		else if (browser.equalsIgnoreCase("chrome")) {
 			
-			ChromeOptions options = new ChromeOptions();
-			
-			options.addArguments("--headless=new");
-			//options.addArguments("--window-size=2560,1440");
-			//options.addArguments("--window-size=1920,1080");
-			options.addArguments("--disable-gpu");
-			options.addArguments("--disable-notifications");
-			//options.addArguments("--start-maximized");
-			options.addArguments("--ignore-certificate-errors");
-			options.addArguments("--disable-popup-blocking");
-			
-		
-			
+			/*
+			 * ChromeOptions options = new ChromeOptions();
+			 * 
+			 * options.addArguments("--headless=new");
+			 * //options.addArguments("--window-size=2560,1440");
+			 * //options.addArguments("--window-size=1920,1080");
+			 * options.addArguments("--disable-gpu");
+			 * options.addArguments("--disable-notifications");
+			 * //options.addArguments("--start-maximized");
+			 * options.addArguments("--ignore-certificate-errors");
+			 * options.addArguments("--disable-popup-blocking");
+			 * 
+			 * 
+			 */
 			
 			//driver = new ChromeDriver();
-			driver.set(new ChromeDriver(options));
+			driver.set(new ChromeDriver());
 			ExtentManger.registerDriver(getDriver()); // Register WebDriver instance with ExtentManager
 			logger.info("Chrome browser launched successfully.");
 		} else if (browser.equalsIgnoreCase("firefox")) {
@@ -170,12 +172,12 @@ public class BaseClass {
 
 			
 
-			options.addArguments("--headless");
-			options.addArguments("--disable-gpu");
+			options.addArguments("--headless=new");
 			options.addArguments("--window-size=1920,1080");
-			options.addArguments("--no-sandbox");
+			options.addArguments("--disable-gpu");
 			options.addArguments("--disable-dev-shm-usage");
-			options.addArguments("--remote-debugging-port=9222");
+			options.addArguments("--no-sandbox");
+			options.addArguments("--remote-allow-origins=*");
 			//driver = new EdgeDriver();
 			driver.set(new EdgeDriver(options));
 			ExtentManger.registerDriver(getDriver());
@@ -209,7 +211,7 @@ public class BaseClass {
 
 	@BeforeMethod
 	@Parameters("browser")
-	public synchronized void  setUp(String browser) throws IOException {
+	public synchronized void  setUp(@Optional("chrome") String browser) throws IOException {
 		
 		System.out.println("Setting up the webdrvier for the test: " + this.getClass().getSimpleName());
 		

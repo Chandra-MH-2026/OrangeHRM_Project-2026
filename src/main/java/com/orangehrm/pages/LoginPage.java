@@ -15,7 +15,7 @@ public class LoginPage extends BaseClass {
 	private By loginButton = By.xpath("//button[text() = ' Login ']");
 	private By errorMessage = By.xpath("//p[text() = 'Invalid credentials']");
 	
-	public LoginPage(WebDriver driver) { 
+	public LoginPage() { 
 		this.actionDriver = BaseClass.getActionDriver();
 		
 	}
