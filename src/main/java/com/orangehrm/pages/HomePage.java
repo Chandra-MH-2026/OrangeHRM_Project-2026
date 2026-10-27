@@ -22,7 +22,7 @@ public class HomePage {
 	private By employeeFirstandMidname = By.xpath("//div[@class = 'oxd-table-card']/div/div[3]");
 	private By employeeLastName = By.xpath("//div[@class = 'oxd-table-card']/div/div[4]");
 	
-	public HomePage(WebDriver driver){
+	public HomePage(){
 		this.actionDriver = BaseClass.getActionDriver();
 		
 	}

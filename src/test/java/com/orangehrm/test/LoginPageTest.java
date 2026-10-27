@@ -18,11 +18,15 @@ public class LoginPageTest extends BaseClass {
 	
 	@BeforeMethod
 	public void setupPages(){
-		loginpage = new LoginPage(driver.get());
-		homepage = new HomePage(driver.get());
+		loginpage = new LoginPage();
+		homepage = new HomePage();
 	}
 	
-	@Test(dataProvider = "validLoginData", dataProviderClass = DataProviders.class)
+	@Test(
+			dataProvider = "validLoginData", 
+			dataProviderClass = DataProviders.class
+			)
+	
 	public void testValidLogin(String username, String password) {
 		
 		//ExtentManger.startTest("Valid Login Test"); --Implemented in TestListeners, so no need to start test here
